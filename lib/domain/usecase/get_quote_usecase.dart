@@ -6,7 +6,7 @@ class GetQuoteUseCase {
   final QuoteRepository repository;
   GetQuoteUseCase(this.repository);
 
-  Future<QuoteEntity> execute() async {
-    return await repository.getQuoteList();
+  Future<QuoteEntity> execute(bool isOnline) async {
+    return await repository.getQuoteList(isOnline);
   }
 }

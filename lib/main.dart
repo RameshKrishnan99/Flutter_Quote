@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quote/presentation/bloc/quote_bloc.dart';
 import 'package:flutter_quote/presentation/bloc/quote_event.dart';
@@ -16,12 +19,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final QuoteBloc todoBloc = getIt<QuoteBloc>();
-
+  final QuoteBloc quoteBloc = getIt<QuoteBloc>();
+  StreamSubscription<ConnectivityResult>? subscription;
 
   @override
   void initState() {
     super.initState();
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+          print("Connection result $result");
+      quoteBloc.connectivityResult = result;
+    });
   }
 
 
@@ -30,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => todoBloc..add(QuoteStartedEvent()),
+            create: (_) => quoteBloc..add(QuoteStartedEvent()),
           ),
         ],
         child: MaterialApp.router(

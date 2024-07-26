@@ -6,15 +6,14 @@ class QuoteEntity {
   String? author;
   List<String>? tags;
 
-  QuoteEntity(this.sId,
+  QuoteEntity({this.sId,
     this.content,
     this.author,
-    this.tags);
+    this.tags});
 
   factory QuoteEntity.fromQuoteModel(QuoteModel quoteModel) {
-    return QuoteEntity(quoteModel.sId,
-      quoteModel.content,
-      quoteModel.author,
-      quoteModel.tags,);
+    return QuoteEntity(
+      content: quoteModel.content,
+      author: quoteModel.author,);
   }
 }

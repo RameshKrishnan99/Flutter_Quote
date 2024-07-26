@@ -11,8 +11,8 @@ class QuoteRepositoryImpl implements QuoteRepository {
 
 
   @override
-  Future<QuoteEntity> getQuoteList() async {
-    final result = await remoteDataSource.getRandomQuote();
+  Future<QuoteEntity> getQuoteList(bool isOnline) async {
+      final result = isOnline ? await remoteDataSource.getRandomQuote() : await remoteDataSource.getOfflineRandomQuote() ;
     return QuoteEntity.fromQuoteModel(result);
   }
 
